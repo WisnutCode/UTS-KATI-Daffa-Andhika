@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GenZphone</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      /* Navigation */
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      .search-container {
+        flex: 1;
+        max-width: 500px;
+        margin: 0 1rem;
+        display: flex;
+      }
+
+      .search-container input {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 25px 0 0 25px;
+        outline: none;
+      }
+
+      .search-container button {
+        padding: 0.5rem 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 0 25px 25px 0;
+        cursor: pointer;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #3498db;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Promo Slider Section */
+      .promo-slider {
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        touch-action: pan-y;
+      }
+
+      .promo-marquee {
+        background-color: #3498db;
+        color: white;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .marquee-content {
+        display: inline-block;
+        white-space: nowrap;
+        padding-left: 100%;
+        animation: marquee 20s linear infinite;
+      }
+
+      .marquee-content:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      .slider-container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+
+      .promo-slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .promo-slide.active {
+        opacity: 1;
+      }
+
+      .promo-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .promo-content {
+        position: absolute;
+        bottom: 20%;
+        left: 10%;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        max-width: 500px;
+      }
+
+      .promo-content h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .promo-content p {
+        margin-bottom: 1.5rem;
+      }
+
+      .slider-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        color: white;
+        background-color: transparent;
+        border: none;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 10;
+        opacity: 0;
+        transition: opacity 0.3s ease, background-color 0.3s ease;
+      }
+
+      .slider-nav.prev {
+        left: 2rem;
+      }
+
+      .slider-nav.next {
+        right: 2rem;
+      }
+
+      .promo-slider:hover .slider-nav {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .slider-nav:hover {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #2980b9;
+      }
+
+      /* Products */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        color: #2c3e50;
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .product-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .product-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .product-info {
+        padding: 1rem;
+      }
+
+      .product-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+      }
+
+      .product-price {
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 1rem;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #2c3e50;
+        color: white;
+        padding: 3rem 0;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 0 2rem;
+      }
+
+      .footer-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .footer-section h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #3498db;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        margin-bottom: 0.8rem;
+        display: block;
+        color: #ecf0f1;
+        text-decoration: none;
+      }
+
+      .footer-section a:hover {
+        color: #3498db;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-links a {
+        font-size: 1.5rem;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid #34495e;
+      }
+
+      /* Pages */
+      .page {
+        display: none;
+        padding: 3rem 0;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      /* Payment Form */
+      .payment-form {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .form-group textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      /* Invoice Popup */
+      .invoice-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        display: none;
+      }
+
+      .invoice-container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      .invoice-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .invoice-header h2 {
+        color: #3498db;
+      }
+
+      .invoice-details {
+        margin-bottom: 1.5rem;
+      }
+
+      .invoice-details div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .invoice-total {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+
+      .payment-methods {
+        margin-top: 1.5rem;
+      }
+
+      .payment-methods h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .payment-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .payment-option input {
+        margin-right: 0.5rem;
+      }
+
+      .invoice-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+
+      .btn-close {
+        background-color: #e74c3c;
+        margin-left: 1rem;
+      }
+
+      /* About Section */
+      .about-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .owner-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1.5rem;
+        border: 5px solid #3498db;
+      }
+
+      .owner-name {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+      }
+
+      .owner-title {
+        color: #3498db;
+        margin-bottom: 1.5rem;
+      }
+
+      .owner-bio {
+        text-align: center;
+        line-height: 1.6;
+        max-width: 600px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-wrap: wrap;
+        }
+
+        .search-container {
+          order: 3;
+          width: 100%;
+          margin: 1rem 0 0 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          gap: 0;
+          margin-top: 1rem;
+        }
+
+        .nav-links.show {
+          display: flex;
+        }
+
+        .nav-links a {
+          padding: 0.5rem 0;
+          border-top: 1px solid #eee;
+        }
+
+        .hero {
+          height: 400px;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .products-grid {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        }
+
+        .hero {
+          height: 300px;
+        }
+
+        .hero h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+        <div class="logo">GenZphone</div>
+
+        <div class="search-container">
+          <input type="text" placeholder="Cari handphone..." />
+          <button type="submit">Search</button>
+        </div>
+
+        <button class="mobile-menu-btn">☰</button>
+
+        <div class="nav-links">
+          <a href="#" class="nav-link" data-page="home">Home</a>
+          <a href="#" class="nav-link" data-page="payment">Payment</a>
+          <a href="#" class="nav-link" data-page="about">About</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+      <div class="promo-slider">
+        <div class="slider-container">
+          <div class="promo-slide active">
+            <img src="slideip15.jpg" alt="Promo iPhone 15" />
+            <div class="promo-content">
+              <h2>Promo Spesial iPhone 15</h2>
+              <p>Diskon Rp 2.000.000 + Cashback hingga Rp 1.000.000</p>
+              <button class="btn promo-btn">Beli Sekarang</button>
+            </div>
+          </div>
+          <div class="promo-slide">
+            <img src="slidealls.jpg" alt="Promo Samsung" />
+            <div class="promo-content">
+              <h2>All Samsung</h2>
+              <p>Gratis Galaxy Buds Pro + Diskon 15%</p>
+              <button class="btn promo-btn">Beli Sekarang</button>
+            </div>
+          </div>
+          <div class="promo-slide">
+            <img src="slideallip.jpg" alt="Promo all iphone" />
+            <div class="promo-content">
+              <h2>Iphone Super Sale</h2>
+              <p>Cicilan 0% + Free Wireless Charger</p>
+              <button class="btn promo-btn">Beli Sekarang</button>
+            </div>
+          </div>
+          <button class="slider-nav prev">&#10094;</button>
+          <button class="slider-nav next">&#10095;</button>
+        </div>
+      </div>
+
+      <div class="promo-marquee">
+        <div class="marquee-content">
+          <span style="font-size: 1.2rem; font-weight: bold">
+            🔥 PROMO KHUSUS! • Diskon sampai Rp 2.000.000 untuk iPhone 15 • Free Galaxy Buds Pro untuk Pembelian Samsung • Cicilan 0% 12 Bulan • Garansi Resmi 1 Tahun • Free Ongkir ke Seluruh Indonesia • Cashback hingga Rp 500.000 •
+          </span>
+        </div>
+      </div>
+
+      <div class="container">
+        <h2 class="section-title">Produk Unggulan</h2>
+
+        <div class="products-grid">
+          <!-- Product 1 -->
+          <div class="product-card">
+            <img src="samsungs24u.png" alt="samsungs24u" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Samsung S24 Ultra</h3>
+              <p class="product-price">Rp 22.999.000</p>
+              <button class="btn beli-btn" data-product="Samsung S24 Ultra" data-price="22999000">Beli</button>
+            </div>
+          </div>
+
+          <!-- Product 2 -->
+          <div class="product-card">
+            <img src="xiaomi15.png" alt="xiaomi15" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Xiaomi 15</h3>
+              <p class="product-price">Rp 19.999.000</p>
+              <button class="btn beli-btn" data-product="Xiaomi 15" data-price="19999000">Beli</button>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div class="product-card">
+            <img src="ip14.png" alt="ip14" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Iphone 14</h3>
+              <p class="product-price">Rp 14.999.000</p>
+              <button class="btn beli-btn" data-product="Iphone 14" data-price="14999000">Beli</button>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div class="product-card">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ea81da0d-24b2-482c-8f82-3fe96977838b.png" alt="Oppo Find X5 Pro warna putih dengan desain melengkung" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Oppo Find X5 Pro</h3>
+              <p class="product-price">Rp 16.499.000</p>
+              <button class="btn beli-btn" data-product="Oppo Find X5 Pro" data-price="16499000">Beli</button>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="product-card">
+            <img src="ip16prom.png" alt="ip16prom" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Iphone 16 Pro Max</h3>
+              <p class="product-price">Rp 15.799.000</p>
+              <button class="btn beli-btn" data-product="Iphone 16 Pro Max" data-price="15799000">Beli</button>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="product-card">
+            <img src="ip16.png" alt="ip16" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Iphone 16</h3>
+              <p class="product-price">Rp 11.999.000</p>
+              <button class="btn beli-btn" data-product="Iphone 16" data-price="11999000">Beli</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="ip15.png" alt="ip15" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Iphone 15</h3>
+              <p class="product-price">Rp 11.999.000</p>
+              <button class="btn beli-btn" data-product="Iphone 15" data-price="11999000">Beli</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="ip13.png" alt="ip13" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Iphone 13</h3>
+              <p class="product-price">Rp 11.999.000</p>
+              <button class="btn beli-btn" data-product="Iphone 13" data-price="11999000">Beli</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="samsungs24fe.png" alt="samsungs24fe" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Samsung S24 Fe</h3>
+              <p class="product-price">Rp 11.999.000</p>
+              <button class="btn beli-btn" data-product="Samsung S24 Fe" data-price="11999000">Beli</button>
+            </div>
+          </div>
+          <div class="product-card">
+            <img src="xiaomi14tp.png" alt="xiaomi14tp" class="product-img" />
+            <div class="product-info">
+              <h3 class="product-title">Xiaomi 14T Pro</h3>
+              <p class="product-price">Rp 11.999.000</p>
+              <button class="btn beli-btn" data-product="Xiaomi 14T Pro" data-price="11999000">Beli</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Page -->
+    <section id="payment" class="page">
+      <div class="container">
+        <h2 class="section-title">Form Pembelian</h2>
+
+        <form id="payment-form" class="payment-form">
+          <div class="form-group">
+            <label for="nama">Nama Pembeli</label>
+            <input type="text" id="nama" name="nama" required />
+          </div>
+
+          <div class="form-group">
+            <label for="produk">Produk yang Dibeli</label>
+            <select id="produk" name="produk" required>
+              <option value="">Pilih Produk</option>
+              <option value="Samsung S24 Ultra" data-price="22999000">Samsung S24 Ultra - Rp 22.999.000</option>
+              <option value="Xiaomi 15" data-price="19999000">Xiaomi 15 - Rp 19.999.000</option>
+              <option value="Iphone 14" data-price="14999000">Iphone 14 - Rp 14.999.000</option>
+              <option value="Iphone 13" data-price="16499000">Iphone 13 - Rp 16.499.000</option>
+              <option value="Iphone 16 Pro Max" data-price="15799000">Iphone 16 Pro Max - Rp 15.799.000</option>
+              <option value="Iphone 16" data-price="19999000">Iphone 16 - Rp 19.999.000</option>
+              <option value="Iphone 15" data-price="14999000">Iphone 15 - Rp 14.999.000</option>
+              <option value="Iphone 13" data-price="16499000">Iphone 13 - Rp 16.499.000</option>
+              <option value="Samsung S24 Fe" data-price="15799000">Samsung S24 Fe - Rp 15.799.000</option>
+              <option value="Xiaomi 14T Pro" data-price="11999000">Xiaomi 14T Pro - Rp 11.999.000</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="harga">Harga (Rp)</label>
+            <div id="harga-display" style="padding: 0.8rem; background-color: #f5f5f5; border-radius: 5px">Rp 0</div>
+            <input type="hidden" id="harga" name="harga" />
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required />
+          </div>
+
+          <div class="form-group">
+            <label for="alamat">Alamat Pengiriman</label>
+            <textarea id="alamat" name="alamat" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="metode">Metode Pembayaran</label>
+            <select id="metode" name="metode" required>
+              <option value="">Pilih metode pembayaran</option>
+              <option value="transfer">Transfer Bank</option>
+              <option value="cod">COD (Bayar di Tempat)</option>
+              <option value="kredit">Kartu Kredit</option>
+              <option value="digiwallet">E-Wallet (OVO, GoPay, Dana)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Kirim Pesanan</button>
+        </form>
+      </div>
+
+      <!-- Invoice Popup -->
+      <div id="invoice-overlay" class="invoice-overlay">
+        <div class="invoice-container">
+          <div class="invoice-header">
+            <h2>Invoice Pembelian</h2>
+            <p>Terima kasih telah berbelanja di PhoneStore</p>
+          </div>
+
+          <div class="invoice-details">
+            <div>
+              <span>Nama Pembeli:</span>
+              <span id="invoice-nama"></span>
+            </div>
+            <div>
+              <span>Produk:</span>
+              <span id="invoice-produk"></span>
+            </div>
+            <div>
+              <span>Harga Satuan:</span>
+              <span id="invoice-harga"></span>
+            </div>
+            <div>
+              <span>Quantity:</span>
+              <span id="invoice-quantity"></span>
+            </div>
+            <div>
+              <span>Total Harga:</span>
+              <span id="invoice-total"></span>
+            </div>
+            <div>
+              <span>Alamat Pengiriman:</span>
+              <span id="invoice-alamat"></span>
+            </div>
+            <div>
+              <span>Metode Pembayaran:</span>
+              <span id="invoice-metode"></span>
+            </div>
+          </div>
+
+          <div class="payment-methods">
+            <h3>Instruksi Pembayaran:</h3>
+            <p id="payment-instruction">Silakan transfer ke rekening berikut:</p>
+            <div id="bank-transfer" style="display: none">
+              <p>
+                Bank Mandiri<br />
+                No. Rek: 1234567890<br />
+                A/N: PhoneStore
+              </p>
+            </div>
+            <div id="cod-instruction" style="display: none">
+              <p>Pesanan Anda akan diproses setelah konfirmasi. Petugas akan menghubungi Anda untuk mengatur waktu pengiriman.</p>
+            </div>
+            <div id="ewallet-instruction" style="display: none">
+              <p>Silakan scan QR code berikut atau gunakan nomor telepon 081234567890 untuk pembayaran via e-wallet.</p>
+            </div>
+          </div>
+
+          <div class="invoice-buttons">
+            <button id="btn-close" class="btn btn-close">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page">
+      <div class="container">
+        <h2 class="section-title">Tentang Kami</h2>
+
+        <div class="about-container">
+          <img src="DaffaAndhika (1).png" alt="Foto pemilik toko GenZphone" class="owner-image" />
+          <h3 class="owner-name">Daffa Andhika</h3>
+          <p class="owner-title">Pendiri & CEO GenZphone</p>
+          <p class="owner-bio">
+            Rizky Pratama telah berkecimpung dalam dunia teknologi mobile selama lebih dari 10 tahun. Dengan latar belakang pendidikan di bidang Teknik Elektro dan pengalaman bekerja di berbagai perusahaan teknologi terkemuka, dia
+            mendirikan PhoneStore pada tahun 2018 dengan visi memberikan pengalaman berbelanja handphone yang mudah, aman, dan terpercaya bagi masyarakat Indonesia.
+            <br /><br />
+            Di waktu luangnya, Rizky senang mengikuti perkembangan teknologi terbaru dan sering menjadi pembicara di berbagai seminar teknologi. PhoneStore di bawah kepemimpinannya telah mendapatkan berbagai penghargaan sebagai online store
+            terpercaya dan inovatif.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Tentang GenZphone</h3>
+          <p>GenZphone adalah toko handphone online terpercaya di Indonesia, menyediakan berbagai produk smartphone dengan garansi resmi dan harga terbaik.</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Kontak Kami</h3>
+          <p>Jl. Teknologi No. 123, Bandung</p>
+          <p>0812-3456-7890</p>
+          <p>info@genzphone.com</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Jam Operasional</h3>
+          <p>Senin - Jumat: 09.00 - 18.00</p>
+          <p>Sabtu: 09.00 - 15.00</p>
+          <p>Minggu & Hari Libur: Tutup</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Sosial Media</h3>
+          <div class="social-links">
+            <a href="#"><img src="Sosial Media/instagram.png" alt="Instagram" width="30px" /></a>
+            <a href="#"><img src="Sosial Media/facebook.png" alt="Facebook" width="30px" /></a>
+            <a href="#"><img src="Sosial Media/twitter.png" alt="Twitter" width="30px" /></a>
+            <a href="#"><img src="Sosial Media/whatsapp.png" alt="whatsapp" width="30px" /></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        <p>&copy; 2023 GenZphone. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Menu Toggle
+      document.querySelector(".mobile-menu-btn").addEventListener("click", function () {
+        document.querySelector(".nav-links").classList.toggle("show");
+      });
+
+      // Navigation
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const pageId = this.getAttribute("data-page");
+
+          // Hide all pages
+          document.querySelectorAll(".page").forEach((page) => {
+            page.classList.remove("active");
+          });
+
+          // Show selected page
+          document.getElementById(pageId).classList.add("active");
+
+          // Close mobile menu if open
+          document.querySelector(".nav-links").classList.remove("show");
+        });
+      });
+
+      // Promo Slider Functionality with Touch Support
+      const slider = document.querySelector(".promo-slider");
+      const slides = document.querySelectorAll(".promo-slide");
+      let currentSlide = 0;
+      let startX = 0;
+      let isSwiping = false;
+
+      function showSlide(n) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+
+      // Handle touch events for swiping
+      slider.addEventListener(
+        "touchstart",
+        (e) => {
+          startX = e.touches[0].clientX;
+          isSwiping = true;
+        },
+        { passive: true }
+      );
+
+      slider.addEventListener(
+        "touchmove",
+        (e) => {
+          if (!isSwiping) return;
+          const x = e.touches[0].clientX;
+          const diff = startX - x;
+          if (Math.abs(diff) > 50) {
+            // Minimum swipe distance
+            if (diff > 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
+            isSwiping = false;
+          }
+        },
+        { passive: true }
+      );
+
+      // Auto slide every 5 seconds
+      let slideInterval = setInterval(nextSlide, 5000);
+
+      // Reset timer when user interacts manually
+      slider.addEventListener("touchstart", () => {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+      });
+
+      // Auto fill product info when click buy button
+      document.querySelectorAll(".beli-btn").forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          const product = this.getAttribute("data-product");
+          const price = this.getAttribute("data-price");
+
+          // Navigate to payment page
+          document.querySelectorAll(".page").forEach((page) => {
+            page.classList.remove("active");
+          });
+          document.getElementById("payment").classList.add("active");
+
+          // Fill product info
+          document.getElementById("produk").value = product;
+          document.getElementById("harga").value = price;
+        });
+      });
+
+      // Form submission
+      document.getElementById("payment-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get form values
+        const nama = document.getElementById("nama").value;
+        const produk = document.getElementById("produk").value;
+        const harga = document.getElementById("harga").value;
+        const quantity = document.getElementById("quantity").value;
+        const alamat = document.getElementById("alamat").value;
+        const metode = document.getElementById("metode").value;
+
+        // Format harga to IDR currency
+        const hargaFormatted = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(harga);
+
+        const total = harga * quantity;
+        const totalFormatted = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(total);
+
+        // Fill invoice
+        document.getElementById("invoice-nama").textContent = nama;
+        document.getElementById("invoice-produk").textContent = produk;
+        document.getElementById("invoice-harga").textContent = hargaFormatted;
+        document.getElementById("invoice-quantity").textContent = quantity;
+        document.getElementById("invoice-total").textContent = totalFormatted;
+        document.getElementById("invoice-alamat").textContent = alamat;
+        document.getElementById("invoice-metode").textContent = document.getElementById("metode").options[document.getElementById("metode").selectedIndex].text;
+
+        // Show payment instructions
+        document.getElementById("bank-transfer").style.display = "none";
+        document.getElementById("cod-instruction").style.display = "none";
+        document.getElementById("ewallet-instruction").style.display = "none";
+
+        if (metode === "transfer") {
+          document.getElementById("payment-instruction").textContent = "Silakan transfer ke rekening berikut:";
+          document.getElementById("bank-transfer").style.display = "block";
+        } else if (metode === "cod") {
+          document.getElementById("payment-instruction").textContent = "Pesanan Anda akan diproses setelah konfirmasi. Petugas akan menghubungi Anda untuk mengatur waktu pengiriman.";
+          document.getElementById("cod-instruction").style.display = "block";
+        } else if (metode === "digiwallet") {
+          document.getElementById("payment-instruction").textContent = "Silakan scan QR code berikut atau gunakan nomor telepon 081234567890 untuk pembayaran via e-wallet.";
+          document.getElementById("ewallet-instruction").style.display = "block";
+        } else {
+          document.getElementById("payment-instruction").textContent = "Pembayaran dengan kartu kredit akan diproses secara otomatis.";
+        }
+
+        // Show invoice
+        document.getElementById("invoice-overlay").style.display = "flex";
+      });
+
+      // Close invoice
+      document.getElementById("btn-close").addEventListener("click", function () {
+        document.getElementById("invoice-overlay").style.display = "none";
+      });
+
+      // Update price when product changes
+      document.getElementById("produk").addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const price = selectedOption.getAttribute("data-price") || 0;
+        document.getElementById("harga").value = price;
+        document.getElementById("harga-display").textContent = "Rp " + parseInt(price).toLocaleString("id-ID");
+      });
+
+      // Auto fill product from buy buttons
+      document.querySelectorAll(".beli-btn").forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          const product = this.getAttribute("data-product");
+
+          // Navigate to payment page
+          document.querySelectorAll(".page").forEach((page) => {
+            page.classList.remove("active");
+          });
+          document.getElementById("payment").classList.add("active");
+
+          // Select product
+          const select = document.getElementById("produk");
+          for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === product) {
+              select.selectedIndex = i;
+              select.dispatchEvent(new Event("change"));
+              break;
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
